@@ -7,9 +7,14 @@ metadata:
 spec:
   jobLabel: k8s-app
   endpoints:
-  - port: cadvisor
+  - port: https-metrics
+    scheme: https
+    path: /metrics/cadvisor
     interval: 30s
     honorLabels: true
+    tlsConfig:
+      insecureSkipVerify: true
+    bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
   selector:
     matchLabels:
       k8s-app: kubelet
